@@ -31,10 +31,7 @@ namespace MvcMovie
             //options.UseSqlServer(Configuration.GetConnectionString("MvcMovieContext")));
             services.AddDbContext<MvcVehicleContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("MvcVehicleContext")));
-        }
-            services.AddDbContext<MvcMovieContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("MvcMovieContext")));
-
+        
             RegisterServices(services);
         }
 

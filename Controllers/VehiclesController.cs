@@ -10,36 +10,22 @@ using MvcMovie.Models;
 
 namespace MvcMovie.Controllers
 {
-    public class MoviesController : Controller
+    public class VehiclesController : Controller
     {
-        private readonly MvcMovieContext _context;
+        private readonly MvcVehicleContext _context;
 
-        public MoviesController(MvcMovieContext context)
+        public VehiclesController(MvcVehicleContext context)
         {
             _context = context;
         }
 
-        // GET: Movies
-        public async Task<IActionResult> Index(string searchString)
+        // GET: Vehicles
+        public async Task<IActionResult> Index()
         {
-            var movies = from m in _context.Movie
-                         select m;
-
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                movies = movies.Where(s => s.Title.Contains(searchString));
-            }
-
-            return View(await movies.ToListAsync());
+            return View(await _context.Vehicle.ToListAsync());
         }
 
-        [HttpPost]
-        public string Index(string searchString, bool notUsed)
-        {
-            return "From [HttpPost]Index: filter on " + searchString;
-        }
-
-        // GET: Movies/Details/5
+        // GET: Vehicles/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -47,39 +33,39 @@ namespace MvcMovie.Controllers
                 return NotFound();
             }
 
-            var movie = await _context.Movie
+            var vehicle = await _context.Vehicle
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (movie == null)
+            if (vehicle == null)
             {
                 return NotFound();
             }
 
-            return View(movie);
+            return View(vehicle);
         }
 
-        // GET: Movies/Create
+        // GET: Vehicles/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Movies/Create
+        // POST: Vehicles/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,ReleaseDate,Genre,Price")] Movie movie)
+        public async Task<IActionResult> Create([Bind("Id,TowStrap")] Vehicle vehicle)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(movie);
+                _context.Add(vehicle);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(movie);
+            return View(vehicle);
         }
 
-        // GET: Movies/Edit/5
+        // GET: Vehicles/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -87,22 +73,22 @@ namespace MvcMovie.Controllers
                 return NotFound();
             }
 
-            var movie = await _context.Movie.FindAsync(id);
-            if (movie == null)
+            var vehicle = await _context.Vehicle.FindAsync(id);
+            if (vehicle == null)
             {
                 return NotFound();
             }
-            return View(movie);
+            return View(vehicle);
         }
 
-        // POST: Movies/Edit/5
+        // POST: Vehicles/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,ReleaseDate,Genre,Price")] Movie movie)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,TowStrap")] Vehicle vehicle)
         {
-            if (id != movie.Id)
+            if (id != vehicle.Id)
             {
                 return NotFound();
             }
@@ -111,12 +97,12 @@ namespace MvcMovie.Controllers
             {
                 try
                 {
-                    _context.Update(movie);
+                    _context.Update(vehicle);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!MovieExists(movie.Id))
+                    if (!VehicleExists(vehicle.Id))
                     {
                         return NotFound();
                     }
@@ -127,10 +113,10 @@ namespace MvcMovie.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(movie);
+            return View(vehicle);
         }
 
-        // GET: Movies/Delete/5
+        // GET: Vehicles/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -138,30 +124,30 @@ namespace MvcMovie.Controllers
                 return NotFound();
             }
 
-            var movie = await _context.Movie
+            var vehicle = await _context.Vehicle
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (movie == null)
+            if (vehicle == null)
             {
                 return NotFound();
             }
 
-            return View(movie);
+            return View(vehicle);
         }
 
-        // POST: Movies/Delete/5
+        // POST: Vehicles/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var movie = await _context.Movie.FindAsync(id);
-            _context.Movie.Remove(movie);
+            var vehicle = await _context.Vehicle.FindAsync(id);
+            _context.Vehicle.Remove(vehicle);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool MovieExists(int id)
+        private bool VehicleExists(int id)
         {
-            return _context.Movie.Any(e => e.Id == id);
+            return _context.Vehicle.Any(e => e.Id == id);
         }
     }
 }

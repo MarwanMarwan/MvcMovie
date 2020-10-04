@@ -7,5 +7,12 @@ namespace MvcMovie.Models
 {
     public class Vehicle
     {
+        public int Id { get; set; }
+        public bool TowStrap { get; set; }
+
+        public virtual bool Inspect()
+        {
+            return TowStrap;
+        }
     }
 }

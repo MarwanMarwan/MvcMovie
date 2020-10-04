@@ -12,9 +12,14 @@ namespace MvcMovie.Controllers
 {
     public class VehiclesController : Controller
     {
-        private readonly MvcVehicleContext _context;
+        private readonly IMvcVehicleContext _context;
 
-        public VehiclesController(MvcVehicleContext context)
+        public VehiclesController()
+        {
+
+        }
+
+        public VehiclesController(IMvcVehicleContext context)
         {
             _context = context;
         }
@@ -22,7 +27,9 @@ namespace MvcMovie.Controllers
         // GET: Vehicles
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Vehicle.ToListAsync());
+            var result = _context.Vehicle;
+
+            return View(result.ToListAsync());
         }
 
         // GET: Vehicles/Details/5

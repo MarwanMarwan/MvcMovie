@@ -30,6 +30,8 @@ namespace MvcMovie
             //options.UseSqlServer(Configuration.GetConnectionString("MvcMovieContext")));
             services.AddDbContext<MvcVehicleContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("MvcVehicleContext")));
+
+            services.AddSingleton<IMvcVehicleContext, MvcVehicleContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

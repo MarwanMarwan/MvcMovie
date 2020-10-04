@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MvcMovie.Data;
 using Microsoft.EntityFrameworkCore;
+using MvcMovie.Services;
 
 namespace MvcMovie
 {
@@ -30,6 +31,16 @@ namespace MvcMovie
             //options.UseSqlServer(Configuration.GetConnectionString("MvcMovieContext")));
             services.AddDbContext<MvcVehicleContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("MvcVehicleContext")));
+        }
+            services.AddDbContext<MvcMovieContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("MvcMovieContext")));
+
+            RegisterServices(services);
+        }
+
+        private void RegisterServices(IServiceCollection services)
+        {
+            services.AddSingleton<IVehicleService, VehicleService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

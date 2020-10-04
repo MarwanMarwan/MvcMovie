@@ -7,6 +7,7 @@ namespace MvcMovie.Models
 {
     public class Vehicle
     {
+        public string Specs { get; set; }
         public int Id { get; set; }
         public bool TowStrap { get; set; }
 

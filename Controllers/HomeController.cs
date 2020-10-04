@@ -6,21 +6,24 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MvcMovie.Models;
+using MvcMovie.Services;
 
 namespace MvcMovie.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IVehicleService _vehicleService;
+        public HomeController(ILogger<HomeController> logger, IVehicleService vehicleService)
         {
             _logger = logger;
+            _vehicleService = vehicleService;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var listOfVehicles = _vehicleService.GetVehicles();
+            return View(listOfVehicles);
         }
 
         public IActionResult Privacy()
@@ -33,5 +36,8 @@ namespace MvcMovie.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+
+
     }
 }

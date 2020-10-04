@@ -7,5 +7,6 @@ namespace MvcMovie.Models
 {
     public class Vehicle
     {
+        public string Specs { get; set; }
     }
 }
